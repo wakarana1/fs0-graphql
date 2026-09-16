@@ -1,9 +1,36 @@
+import { useState, useEffect } from 'react'
+
 const Books = (props) => {
+  const [books, setBooks] = useState([])
+
+  useEffect(() => {
+    if (!props.show) {
+      return
+    }
+
+    fetch('http://localhost:4000', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        query: `
+          query {
+            allBooks {
+              id
+              title
+              author
+              published
+            }
+          }
+        `,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => setBooks(result.data.allBooks))
+  }, [props.show])
+
   if (!props.show) {
     return null
   }
-
-  const books = []
 
   return (
     <div>
