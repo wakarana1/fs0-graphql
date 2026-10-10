@@ -49,7 +49,10 @@ const Authors = (props) => {
 
     await fetch('http://localhost:4000', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${props.token}`,
+      },
       body: JSON.stringify({
         query: `
           mutation ($name: String!, $born: Int!) {
@@ -91,6 +94,8 @@ const Authors = (props) => {
         </tbody>
       </table>
 
+      {props.token && (
+        <>
       <h2>set birthyear</h2>
       <form onSubmit={submit}>
         <div>
@@ -124,6 +129,8 @@ const Authors = (props) => {
         </div>
         <button type="submit">update author</button>
       </form>
+        </>
+      )}
     </div>
   )
 }

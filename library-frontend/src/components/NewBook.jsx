@@ -16,7 +16,10 @@ const NewBook = (props) => {
 
     await fetch('http://localhost:4000', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${props.token}`,
+      },
       body: JSON.stringify({
         query: `
           mutation ($title: String!, $author: String!, $published: Int!, $genres: [String!]!) {
